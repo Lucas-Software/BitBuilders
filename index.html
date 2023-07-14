@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Equipe BitBuilders</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 style="text-align: center; color: green;">
+    Escolha um agente da equipe BitBuilders
+  </h1>
+  <div class="agent-container">
+    <input type="radio" name="agent" id="leonardo" value="Leonardo Lopes">
+    <label for="leonardo" style="color: green;">Leonardo Lopes</label>
+    <input type="radio" name="agent" id="joao" value="João Vitor">
+    <label for="joao" style="color: green;">João Vitor</label>
+    <input type="radio" name="agent" id="victor" value="Victor Hugo">
+    <label for="victor" style="color: green;">Victor Hugo</label>
+    <input type="radio" name="agent" id="joaomiguel" value="João Miguel">
+    <label for="joaomiguel" style="color: green;">João Miguel</label>
+    <input type="radio" name="agent" id="lucas" value="Lucas Bastos">
+    <label for="lucas" style="color: green;">Lucas Bastos</label>
+  </div>
+  <div class="agent-container" id="agent-info">
+    <img class="agent-img" id="agent-img" src="" alt="Foto do agente">
+    <div class="agent-name" id="agent-name"></div>
+  </div>
+  <div id="error-message" style="display: none; color: red; text-align: center;">Selecione um agente para poder enviá-lo.</div>
+  <div id="success-message" style="display: none; color: green; text-align: center;">Enviado com sucesso!</div>
+  <button id="submit-btn" style="color: purple;">Enviar agente</button>
+  <script>
+    const agentRadioButtons = document.querySelectorAll('input[name="agent"]');
+    const agentImg = document.getElementById('agent-img');
+    const agentName = document.getElementById('agent-name');
+    const submitBtn = document.getElementById('submit-btn');
+    const successMessage = document.getElementById('success-message');
+    const errorMessage = document.getElementById('error-message');
+    agentRadioButtons.forEach(function(radioBtn) {
+      radioBtn.addEventListener('change', function() {
+        if (this.checked) {
+          const selectedAgent = this.value;
+          const agentData = getAgentData(selectedAgent);
+          agentImg.src = agentData.image;
+          agentName.textContent = agentData.name;
+          agentName.style.color = agentData.color;
+          errorMessage.style.display = 'none';
+          successMessage.style.display = 'none';
+          submitBtn.disabled = false;
+        }
+      });
+    });
+    submitBtn.addEventListener('click', function() {
+      if (!document.querySelector('input[name="agent"]:checked')) {
+        errorMessage.style.display = 'block';
+        successMessage.style.display = 'none';
+        return;
+      }
+      successMessage.style.display = 'block';
+      errorMessage.style.display = 'none';
+      submitBtn.disabled = true;
+      agentRadioButtons.forEach(function(radioBtn) {
+        radioBtn.disabled = true;
+      });
+    });
+    function getAgentData(agentName) {
+      const agents = {
+        "Leonardo Lopes": {
+          name: "Leonardo Lopes",
+          image: "img/Pessoa 1.png",
+          color: "blue"
+        },
+        "João Vitor": {
+          name: "João Vitor",
+          image: "img/Pessoa 2.png",
+          color: "yellow"
+        },
+        "Victor Hugo": {
+          name: "Victor Hugo",
+          image: "img/Pessoa 3.png",
+          color: "white"
+        },
+        "João Miguel": {
+          name: "João Miguel",
+          image: "img/Pessoa 4.png",
+          color: "red"
+        },
+        "Lucas Bastos": {
+          name: "Lucas Bastos",
+          image: "img/Pessoa 5.png",
+          color: "green"
+        }
+      };
+      return agents[agentName];
+    }
+  </script>
+</body>
+</html>
